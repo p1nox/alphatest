@@ -16,7 +16,7 @@ class RSJFHMongo {
 	static RULES_COLFIELD = getRulesMap(RULES, FIELD_NAME)
 	
 	static mongo = new GMongo()
-	static db = mongo.getDB("randomnnull10")
+	static db = mongo.getDB("uniformefh10k") //randomnull10
 	
 	static CRONO = new Chronometer();
 	
@@ -33,7 +33,7 @@ class RSJFHMongo {
 		COLLECTION_NAME.each{ col_name ->
 			def fname = iFIELD_NAME.next()			
 			db[col_name] instanceof com.mongodb.DBCollection
-			def sortedCol = db[col_name].find().sort([ ((String) fname) : RULES_COL[col_name] ]).limit(LIMIT)			
+			def sortedCol = db[col_name].find().sort([ ((String) fname) : RULES_COL[col_name] ])//.limit(LIMIT)			
 			sorted_col.add(sortedCol)				
 			best_vptval.put(col_name, sortedCol.iterator().next())			
 		}				
@@ -74,8 +74,9 @@ class RSJFHMongo {
 				//println "VPTRecord "+vptRecord				
 				
 				def updateable = true
-				def vpt_candidate = [:] //JOIN DEL RECORD ACTUAL DEL VPT	
+				def vpt_candidate = [:] //JOIN DEL RECORD ACTUAL DEL VPT				
 				vpt_candidate.put("_id",vptRecord["_id"])
+				println "TUPLE "+vptRecord["_id"]
 				iFIELD_NAME = FIELD_NAME.iterator()
 				COLLECTION_NAME.each{ col_name ->
 					def fname = iFIELD_NAME.next()
@@ -88,13 +89,13 @@ class RSJFHMongo {
 					
 					if (RULES_COL[col_name]==MAX){
 						if (vpt_value<header_point[fname]) {
-							//println "Max "+col_name+":"+vpt_value+" hp:"+header_point[fname]
+							println "Max "+col_name+":"+vpt_value+" hp:"+header_point[fname]
 							updateable = false
 						}
 					}
 					else { //MIN
 						if (vpt_value>header_point[fname]) {
-							//println "Min "+col_name+":"+vpt_value+" hp:"+header_point[fname]
+							println "Min "+col_name+":"+vpt_value+" hp:"+header_point[fname]
 							updateable = false
 						}
 					}

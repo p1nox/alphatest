@@ -20,7 +20,7 @@ class BucketNullMongo {
 	static RULES_COLFIELD = getRulesMap(RULES, FIELD_NAME)
 	
 	static mongo = new GMongo()
-	static db = mongo.getDB("randomnull10")
+	static db = mongo.getDB("uniformefh10k") //randomnull10
 	
 	static CRONO = new Chronometer();
 	
