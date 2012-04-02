@@ -14,20 +14,34 @@ class SkylineController < ApplicationController
   end
 
   def gen_uniform_data  	
-  	VptUtil.gen_data_uniform( 100 )
-  	flash[:success] = "Data generated with uniform distribution!"
-  	redirect_to skyline_index_path
+    ntuples = params[:ntuple]
+
+    if !ntuples.blank?
+    	VptUtil.gen_data_uniform( ntuples.to_i )
+    	flash[:success] = ntuples+" tuples generated with uniform distribution"
+    else
+      flash[:error] = "No tuple number given"
+    end
+
+    redirect_to skyline_index_path
   end
 
   def gen_normal_data
-  	VptUtil.gen_data_normal( 100 )
-  	flash[:success] = "Data generated with normal distribution!"
+     ntuples = params[:ntuple]
+
+    if !ntuples.blank?
+    	VptUtil.gen_data_normal( ntuples.to_i )
+    	flash[:success] = ntuples+" tuples generated with normal distribution"
+    else
+      flash[:error] = "No tuple number given"
+    end
+
   	redirect_to skyline_index_path
   end
 
   def data_destroy_all
   	VptUtil.destroy_all
-  	flash[:success] = "Data droped!"
+  	flash[:success] = "Data droped"
   	redirect_to skyline_index_path
   end
 
