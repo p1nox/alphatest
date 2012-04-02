@@ -1,4 +1,19 @@
-<h1>Skyline algorithms</h1>
+<div class="row">
+  <div class="span10"><h1>Skyline algorithms</h1></div>
+  <div class="span2">
+	    <div class="btn-group">
+	      <button class="btn btn-warning">Data</button>
+	      <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+	      <ul class="dropdown-menu">
+	        <li><%= link_to "Delete All", skyline_data_destroy_all_path %></li>
+	        <!--li><a href="#">Another action</a></li-->	        
+	        <li class="divider"></li>
+	        <li><%= link_to "Gen Normal", skyline_gen_normal_data_path %></li>
+	        <li><%= link_to "Gen Uniform", skyline_gen_uniform_data_path %></li>
+	      </ul>
+		</div>
+  </div>
+</div>
 
 <ul class="nav nav-list">  
   <li>
@@ -8,3 +23,4 @@
 	<a>Null values</a>
   </li>
 </ul>
+

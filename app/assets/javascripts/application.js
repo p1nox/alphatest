@@ -8,3 +8,4 @@
 //= require jquery_ujs
 //= require_tree .
 //= require twitter/bootstrap/alert
+//= require twitter/bootstrap/dropdown
