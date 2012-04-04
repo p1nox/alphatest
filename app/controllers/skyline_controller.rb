@@ -1,7 +1,10 @@
 class SkylineController < ApplicationController
   
   def index
-
+    flash[:notice] = "Star count = "+Star.count.to_s+", "
+    flash[:notice] << "Food count = "+Food.count.to_s+", "
+    flash[:notice] << "Dist count = "+Dist.count.to_s+", "
+    flash[:notice] << "Price count = "+Price.count.to_s
   end
 
   def full_header
