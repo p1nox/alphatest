@@ -8,9 +8,9 @@ class SkylineController < ApplicationController
   end
 
   def full_header
-  	puts "STARTING*****************************************************************\n"
+  	puts "\nSTARTING*****************************************************************\n"
 
-    sorted_cols = {}
+    sorted_cols = []
     best_vptval = {}
     candidates_skyline = [] 
     InitUtil.load_sc_bv_cs( sorted_cols, best_vptval, candidates_skyline )
@@ -18,7 +18,24 @@ class SkylineController < ApplicationController
     puts "SORTED COLS "+sorted_cols.to_s
     puts "\nBEST VALUES FOR EACH VPT "+best_vptval.to_s
     puts "\nPRIME CANDIDATE SKYLINE LIST "+candidates_skyline.to_s
+
+    header_point = {}
+    InitUtil.upd_header_point( header_point, candidates_skyline )
     
+    hp_updated = true    
+    i = 1
+    while(i<sorted_cols[0].count)
+      puts i+1     
+      hp_updated = false
+
+      header_tuple = []
+      sorted_cols.each do |vpt|
+        puts vpt[i].to_s+"\n---"
+
+      end
+      i+=1
+    end
+
   end  
 
   def null_header
