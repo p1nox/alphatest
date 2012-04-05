@@ -20,19 +20,19 @@ class VptUtil < ActiveRecord::Base
 
   def self.create_tuple( id, star, food, dist, price )
     s = Star.new
-    s.star = star
+    s.value = star
     s.id = id
     s.save
     f = Food.new
-    f.food = food
+    f.value = food
     f.id = id
     f.save
     d = Dist.new
-    d.dist = dist
+    d.value = dist
     d.id = id
     d.save
     p = Price.new
-    p.price = price  
+    p.value = price  
     p.id = id
     p.save
     # n = Name.new

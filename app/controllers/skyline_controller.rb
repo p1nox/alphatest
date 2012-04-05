@@ -8,14 +8,26 @@ class SkylineController < ApplicationController
   end
 
   def full_header
-  	#puts "STARTING"
-  	 	
+  	puts "STARTING*****************************************************************\n"
+
+    sorted_cols = {}
+    best_vptval = {}
+    candidates_skyline = [] 
+    InitUtil.load_sc_bv_cs( sorted_cols, best_vptval, candidates_skyline )
+    
+    puts "SORTED COLS "+sorted_cols.to_s
+    puts "\nBEST VALUES FOR EACH VPT "+best_vptval.to_s
+    puts "\nPRIME CANDIDATE SKYLINE LIST "+candidates_skyline.to_s
+    
   end  
 
   def null_header
   	
   end
 
+
+
+  # DATA GENERATION ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   def gen_uniform_data  	
     ntuples = params[:ntuple]
 
