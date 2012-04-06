@@ -9,6 +9,7 @@ class SkylineController < ApplicationController
 
   def full_header
   	puts "\nSTARTING*****************************************************************\n"
+    CommonUtil.time_start
 
     sorted_cols = []    
     candidates_skyline = [] 
@@ -66,6 +67,7 @@ class SkylineController < ApplicationController
       i+=1
     end            
     
+    CommonUtil.time_stop
     InitUtil.show_candidate_list( candidates_skyline )
   end  
 
