@@ -10,13 +10,11 @@ class SkylineController < ApplicationController
   def full_header
   	puts "\nSTARTING*****************************************************************\n"
 
-    sorted_cols = []
-    best_vptval = {}
+    sorted_cols = []    
     candidates_skyline = [] 
-    InitUtil.load_sc_bv_cs( sorted_cols, best_vptval, candidates_skyline )
+    InitUtil.load_sc_cs( sorted_cols, candidates_skyline )
     
-    puts "SORTED COLS "+sorted_cols.to_s
-    puts "\nBEST VALUES FOR EACH VPT "+best_vptval.to_s
+    puts "SORTED COLS "+sorted_cols.to_s    
     puts "\nPRIME CANDIDATE SKYLINE LIST "+candidates_skyline.to_s
 
     header_point = {}
@@ -24,18 +22,51 @@ class SkylineController < ApplicationController
     
     hp_updated = true    
     i = 1
-    while(i<sorted_cols[0].count)
+    while(hp_updated || i<sorted_cols[0].count)
       puts i+1     
       hp_updated = false
 
       header_tuple = []
       sorted_cols.each do |vpt|
-        puts vpt[i].to_s+"\n---"
+        puts vpt[i].id.to_s+"\n---"
+
+        vpt_candidate = {}  
+        InitUtil.load_complete_tuple( vpt[i].id, vpt_candidate )
+
+        updateable = true
+        InitUtil::FIELD_NAME.each do |fn|                    
+          if InitUtil::RULES_COLFIELD[fn]==InitUtil::MAX
+            if vpt_candidate[fn]<header_point[fn]
+              puts fn+" MAX "+vpt_candidate[fn].to_s+"  "+header_point[fn].to_s
+              updateable = false
+              break
+            end
+          else
+            if vpt_candidate[fn]>header_point[fn]
+              puts fn+" MIN "+vpt_candidate[fn].to_s+"  "+header_point[fn].to_s
+              updateable = false
+              break
+            end
+          end          
+        end  
+        
+        if updateable
+          header_tuple << vpt_candidate    
+          InitUtil.upd_candidate_list( candidates_skyline, vpt_candidate )        
+        end 
 
       end
-      i+=1
-    end
+      puts "\nHEADER TUPLES AND CANDIDATES UPD "+header_tuple.to_s+" "+candidates_skyline.count.to_s
+      
+      if header_tuple.count>0
+        InitUtil.upd_header_point( header_point, header_tuple )
+        hp_updated = true
+      end
 
+      i+=1
+    end            
+    
+    InitUtil.show_candidate_list( candidates_skyline )
   end  
 
   def null_header

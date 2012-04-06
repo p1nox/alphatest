@@ -10,7 +10,7 @@ class InitUtil < ActiveRecord::Base
 	RULES_COL = {"stars"=>MAX, "foods"=>MAX,"dists"=>MIN,"prices"=>MIN} #self.getRulesMap(RULES, COLLECTION_NAME)
 	RULES_COLFIELD = {"star"=>MAX, "food"=>MAX,"dist"=>MIN,"price"=>MIN} #self.getRulesMap(RULES, FIELD_NAME)
 
-	def self.load_sc_bv_cs( sorted_col, best_vptval, candidates_skyline )
+	def self.load_sc_cs( sorted_col, candidates_skyline )
 		vpt_star = Star.all(:order=>"value "+MAX)
 		sorted_col <<  vpt_star
 	    vpt_food = Food.all(:order=>"value "+MAX)
@@ -20,6 +20,7 @@ class InitUtil < ActiveRecord::Base
 	    vpt_price = Price.all(:order=>"value "+MIN)
 	    sorted_col << vpt_price
 
+	    best_vptval = {}
 	    best_vptval["stars"] = vpt_star.first
 	    best_vptval["foods"] = vpt_food.first
 	    best_vptval["dists"] = vpt_dist.first
@@ -33,7 +34,7 @@ class InitUtil < ActiveRecord::Base
 	    	tuple["food"] = Food.find_by_id(bv.id).value
 	    	tuple["dist"] = Dist.find_by_id(bv.id).value
 	    	tuple["price"] = Price.find_by_id(bv.id).value
-	    	candidates_skyline << tuple
+	    	upd_candidate_list( candidates_skyline, tuple )	    	 
 	    end
 
 	end
@@ -51,6 +52,28 @@ class InitUtil < ActiveRecord::Base
 			header_point[fn] = tuples.first[fn]
 		end
 		puts "\nHEADER POINT RESULT: "+header_point.to_s
+	end
+
+	def self.upd_candidate_list( candidates_skyline, vpt_candidate )
+		if !candidates_skyline.include?(vpt_candidate)
+			candidates_skyline << vpt_candidate
+		end
+	end
+
+	def self.show_candidate_list( candidates_skyline )
+		puts "Final Candidate List\n"
+		candidates_skyline.each do |cs|
+			puts cs
+
+		end
+	end
+
+	def self.load_complete_tuple( id, obj)
+		obj["id"] = id
+        obj["star"] = Star.find_by_id(id).value
+        obj["food"] = Food.find_by_id(id).value
+        obj["dist"] = Dist.find_by_id(id).value
+        obj["price"] = Price.find_by_id(id).value
 	end
 
 	def getRulesMap( rules, names )
