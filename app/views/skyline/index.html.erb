@@ -33,7 +33,16 @@
 	<%= link_to "Full Header", skyline_full_header_path %>
   </li>
   <li>
-	<a>Null values</a>
+	<a><%= link_to "Null values", skyline_null_header_path %></a>
+  </li>
+  <li>
+	<a><%= link_to "Gen NUll values and normal distribution", skyline_gen_data_null_path+"?ntuple=5&dist=normal&perc=10" %></a>
+  </li>
+  <li>
+	<a><%= link_to "Gen Null values and uniform distribution", skyline_gen_data_null_path+"?ntuple=20&dist=uniform&perc=10" %></a>
+  </li>
+  <li>
+	<a><%= link_to "Delete All", skyline_data_destroy_all_path %></a>
   </li>
 </ul>
 

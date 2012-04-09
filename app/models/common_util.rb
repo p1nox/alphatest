@@ -1,12 +1,6 @@
 class CommonUtil < ActiveRecord::Base
 	
-	@now = nil
-
-	def self.print_all( list )
-		list.each do |l|
-			puts l.id
-		end
-	end
+	@now = nil	
 
 	def self.time_start
 		@now = Time.now

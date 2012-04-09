@@ -72,7 +72,14 @@ class SkylineController < ApplicationController
   end  
 
   def null_header
-  	
+  	puts "\nSTARTING*****************************************************************\n"
+    CommonUtil.time_start
+
+    sorted_cols = []    
+    candidates_skyline = [] 
+    InitNullUtil.load_sc_cs( sorted_cols, candidates_skyline )
+
+
   end
 
 
@@ -102,6 +109,21 @@ class SkylineController < ApplicationController
     end
 
   	redirect_to skyline_index_path
+  end
+
+  def gen_data_null
+    ntuples = params[:ntuple]
+    distribution = params[:dist]
+    null_percent = params[:perc]
+
+    if !ntuples.blank? && !distribution.blank? && !null_percent.blank?
+      VptUtil.gen_data_null( ntuples.to_i, null_percent.to_i, distribution )
+      flash[:success] = ntuples+" tuples generated with "+params[:dist]+" (nulls) distribution"
+    else
+      flash[:error] = "No tuple number given"
+    end
+
+    redirect_to skyline_index_path
   end
 
   def data_destroy_all
